@@ -18,17 +18,65 @@ def leerArchivo():
     #Regresamos la direccion del documento
     return documento
 
+#8 bits de upcode y 12 de direccion
 def leerInstruccion(oP,aD):
     global aC
     global mQ
-    #Iniciamos con los aritmeticos
+    global pC
+    global left
 
-    #ADD
+    #Arithmetic begin
+
+    #ADD from memory to AC and store in AC
     if(oP=="00000101"):
         print binToDec(aD)
-    
+    #ADD absolute from memory to AC and store in AC
+    if(oP=="00000111"):
+        print binToDec(aD)
+    #SUB from memory to AC and store in AC
+    if(oP=="00000110"):
+        print binToDec(aD)
+    #SUB absolute from memory to AC and store in AC
+    if(oP=="00001000"):
+        print binToDec(aD)
+    #MUL from memory times MQ and store in AC
+    #(most significant) and MQ(least significant)
+    if(oP=="00001011"):
+        print binToDec(aD)
+    #DIV AC by memory and store in AC
+    #(remainder) and MQ(quotient)
+    if(oP=="00001100"):
+        print binToDec(aD)
+    #LSH AC times 2 and store in AC
+    #shift left one bit position
+    if(oP=="00010100"):
+        aC*=2
+    #RSH AC by 2 and store in AC
+    #shift right one bit position
+    if(oP=="00010101"):
+        aC/=2
 
-#8 bits de upcode y 12 de direccion
+    #Arithmetic end
+    #Jump begin
+
+    #JUMP to memory location left
+    if(oP=="00001101"):
+        pC=binToDec(aD)
+        left=True
+    #JUMP to memory location right
+    if(oP=="00001110"):
+        pC=binToDec(aD)
+        left=False
+    #JUMP if AC positive to memory location left
+    if(oP=="00001111" and aC>=0):
+        pC=binToDec(aD)
+        left=True
+    #JUMP if AC positive to memory location right
+    if(oP=="00010000" and aC>=0):
+        pC=binToDec(aD)
+        left=False
+
+    #Jump end
 
 def binToDec(binario):
     numero=0
