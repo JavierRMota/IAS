@@ -28,51 +28,51 @@ def leerInstruccion(oP,aD):
     #Arithmetic begin
 
     #ADD from memory to AC and store in AC
-    if(oP=="00000101"):
-        print binToDec(aD)
+    if(oP=="05"):
+        print hex(aD)
     #ADD absolute from memory to AC and store in AC
-    if(oP=="00000111"):
-        print binToDec(aD)
+    if(oP=="07"):
+        print hex(aD)
     #SUB from memory to AC and store in AC
-    if(oP=="00000110"):
+    if(oP=="06"):
         print binToDec(aD)
     #SUB absolute from memory to AC and store in AC
-    if(oP=="00001000"):
+    if(oP=="08"):
         print binToDec(aD)
     #MUL from memory times MQ and store in AC
     #(most significant) and MQ(least significant)
-    if(oP=="00001011"):
+    if(oP=="0B"):
         print binToDec(aD)
     #DIV AC by memory and store in AC
     #(remainder) and MQ(quotient)
-    if(oP=="00001100"):
+    if(oP=="0C"):
         print binToDec(aD)
     #LSH AC times 2 and store in AC
     #shift left one bit position
-    if(oP=="00010100"):
+    if(oP=="14"):
         aC*=2
     #RSH AC by 2 and store in AC
     #shift right one bit position
-    if(oP=="00010101"):
+    if(oP=="15"):
         aC/=2
 
     #Arithmetic end
     #Jump begin
 
     #JUMP to memory location left
-    if(oP=="00001101"):
+    if(oP=="0D"):
         pC=binToDec(aD)
         left=True
     #JUMP to memory location right
-    if(oP=="00001110"):
+    if(oP=="0E"):
         pC=binToDec(aD)
         left=False
     #JUMP if AC positive to memory location left
-    if(oP=="00001111" and aC>=0):
+    if(oP=="0F" and aC>=0):
         pC=binToDec(aD)
         left=True
     #JUMP if AC positive to memory location right
-    if(oP=="00010000" and aC>=0):
+    if(oP=="10" and aC>=0):
         pC=binToDec(aD)
         left=False
 
@@ -119,10 +119,14 @@ def main():
     #Revisamos cada linea
     while pC!=len(lista):
         pC+=1
-        opcode1=contenido[0:8]
-        address1=contenido[8:20]
-        opcode2=contenido[20:28]
-        address2=contenido[28:40]
+        opcode1=contenido[0:2]
+        address1=contenido[2:5]
+        opcode2=contenido[5:7]
+        address2=contenido[7:10]
+        print opcode1
+        print address1
+        print opcode2
+        print address2
         if(left==True):
             left=False
             leerInstruccion(opcode1,address1)
