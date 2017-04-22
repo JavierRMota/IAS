@@ -9,6 +9,9 @@ pC=0
 left= True
 aC=0
 mQ=0
+doc=open("datos.txt",'r')
+memoria=doc.readlines()
+doc.close()
 
 def leerArchivo():
     #Elegimos el documento
@@ -24,29 +27,33 @@ def leerInstruccion(oP,aD):
     global mQ
     global pC
     global left
+    global memoria
+    aD=int(aD,16)
 
     #Arithmetic begin
 
     #ADD from memory to AC and store in AC
     if(oP=="05"):
-        print hex(aD)
+        aC+=int(memoria[aD],16)
     #ADD absolute from memory to AC and store in AC
     if(oP=="07"):
-        print hex(aD)
+        aC+=abs(int(memoria[aD],16))
     #SUB from memory to AC and store in AC
     if(oP=="06"):
-        print binToDec(aD)
+        aC-=int(memoria[aD],16)
     #SUB absolute from memory to AC and store in AC
     if(oP=="08"):
-        print binToDec(aD)
+        aC-=abs(int(memoria[aD],16))
     #MUL from memory times MQ and store in AC
     #(most significant) and MQ(least significant)
     if(oP=="0B"):
-        print binToDec(aD)
+        print aD
     #DIV AC by memory and store in AC
     #(remainder) and MQ(quotient)
     if(oP=="0C"):
-        print binToDec(aD)
+        c=aC
+        aC%=int(memoria[aD],16)
+        mQ=c//int(memoria[aD],16)
     #LSH AC times 2 and store in AC
     #shift left one bit position
     if(oP=="14"):
@@ -61,29 +68,59 @@ def leerInstruccion(oP,aD):
 
     #JUMP to memory location left
     if(oP=="0D"):
-        pC=binToDec(aD)
+        pC=aD
         left=True
     #JUMP to memory location right
     if(oP=="0E"):
-        pC=binToDec(aD)
+        pC=aD
         left=False
     #JUMP if AC positive to memory location left
     if(oP=="0F" and aC>=0):
-        pC=binToDec(aD)
+        pC=aD
         left=True
     #JUMP if AC positive to memory location right
     if(oP=="10" and aC>=0):
-        pC=binToDec(aD)
+        pC=aD
         left=False
 
     #Jump end
+    #Load begin
 
-def binToDec(binario):
-    numero=0
-    binario=binario[::-1]
-    for x in range(len(binario)):
-        numero+=int(binario[x])*pow(2,x)
-    return numero
+    #LOAD MQ
+    if(oP=="0A"):
+        aC=mQ
+    #LOAD MQ, M(x)
+    if(oP=="09"):
+        mQ=int(memoria[aD],16)
+    #STOR M(x)
+    if(oP=="21"):
+        if(aC>=0):
+            memoria[aD]=str(hex(aC))
+        else:
+            memoria[aD]=str(hex(int(complementoA2(abs(aC)),2)))
+    #LOAD M(x)
+    if(oP=="01"):
+        aC=int(memoria[aD],16)
+    #LOAD -M(x)
+    if(oP=="02"):
+        aC=int(memoria[aD],16)*(-1)
+    #LOAD |M(x)|
+    if(oP=="03"):
+        aC=abs(int(memoria[aD],16))
+    #LOAD -|M(x)|
+    if(oP=="04"):
+        aC=abs(int(memoria[aD],16))*(-1)
+
+    #Load end
+    #STOR begin
+    #STOR end
+    #HALT
+    if(oP=="00" and aD==0):
+        print "HALT"
+        pC=len(lista)
+    #END OF THE INSTRUCTIONS
+    print "aC: "+str(aC)
+    print "mQ: "+str(mQ)
 
 def complementoA2(decimal):
     primero=False
@@ -113,7 +150,8 @@ def main():
 
     #Leemos la primera linea
     lista=doc.readlines()
-    doc.close
+    doc.close()
+
     contenido=lista[0]
 
     #Revisamos cada linea
@@ -123,10 +161,6 @@ def main():
         address1=contenido[2:5]
         opcode2=contenido[5:7]
         address2=contenido[7:10]
-        print opcode1
-        print address1
-        print opcode2
-        print address2
         if(left==True):
             left=False
             leerInstruccion(opcode1,address1)
