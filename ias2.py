@@ -20,7 +20,10 @@ def leerArchivo():
     print("Abriendo documento "+documento+". Por favor espere...")
     #Regresamos la direccion del documento
     return documento
-
+def guardarEnMemoria():
+    doc=open("datos.txt",'w')
+    doc.writelines(memoria)
+    doc.close()
 #8 bits de upcode y 12 de direccion
 def leerInstruccion(oP,aD):
     global aC
