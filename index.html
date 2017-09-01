@@ -1,0 +1,125 @@
+<!-- Este es la interfaz de usuario, el archivo se puede ignorar siempre y cuando no interese el cómo se ve e interese más el cómo funciona-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   
+   <title>IASemu</title>
+   
+   
+   
+   <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]--> 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+<div class="container">
+    <div class="col-md-12"><h1 class="text-center">IASemu <br><small style="font-size:0.4em">By: José Javier Rodríguez Mota, Carlos E. Carbajal Nogués, Miguel Ángel Elizalde, Ian González</small></h1></div>
+    <div class="clearfix"></div>
+    <div class="col-md-4">
+       <fieldset class="form-group">
+            <legend>Base:</legend>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" name="num" value="hex" checked> Hexadecimal
+              </label>
+            </div>
+            <div class="form-check">
+            <label class="custom-control custom-radio">
+                <input type="radio" name="num" value="bin" class="custom-control-input"> Binario
+              </label>
+            </div>
+            <div class="form-check">
+            <label class="form-check-label">
+                <input type="radio" name="num" value="dec"> Decimal
+              </label>
+            </div>
+        </fieldset>
+        <label class="btn btn-default btn-file">
+            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>   Programa
+            <input type="hidden" id="uploadTextValue" name="uploadTextValue" value="" />
+            <input id="uploadText"  type="file" size="10"  onchange="PreviewText();"  hidden/>
+        </label>
+        <label class="btn btn-default btn-file">
+            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>   Memoria
+            <input type="hidden" id="uploadTextValue2" name="uploadTextValue" value="" />
+            <input id="uploadText2"  type="file" size="10"  onchange="PreviewMemory();"  hidden/>
+        </label>
+        <br>
+        <br>
+        <div class="clearfix"></div>
+        <label class="btn btn-default btn-file" onclick="download()">
+            <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Crear memoria
+        </label>
+        <a href="" id="a">
+        </a>
+        
+        
+    </div>
+    <div class="col-md-4">
+       <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center"><div id="opciones"></div></h3>
+            </div>
+            <div class="panel-body">
+                 <div id="programa" ></div>
+            </div>
+        </div> 
+    </div>
+    <div class="col-md-4">
+       <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">Registros:</h3>
+            </div>
+            <div class="panel-body">
+                 <div id="results"></div>
+                 <div id="estado"></div>
+            </div>
+        </div> 
+    </div>
+    <div class="clearfix"></div>
+    <br>
+    <div class="col-md-12">
+       <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">Memoria:</h3>
+            </div>
+            <div class="panel-body">
+                 <div id="memoria"></div>
+            </div>
+        </div> 
+    </div>
+    
+    
+    
+    
+</div>
+
+<script src="main.js" type="text/javascript"></script>
+
+        
+        
+
+
+    
+   
+</body>
+
+
+</html>
